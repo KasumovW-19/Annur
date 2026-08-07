@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   Building2,
   Bus,
@@ -7,14 +9,17 @@ import {
   MapPin,
   Play,
   Trees,
+  X,
 } from "lucide-react";
 
 import { Container } from "@/components/ui/Container/Container";
 import { Reveal } from "@/components/ui/Reveal/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading/SectionHeading";
-import { INSTAGRAM_URL } from "@/lib/constants";
 
 import styles from "./About.module.scss";
+
+const VIDEO_SRC = "/videos/complex.mp4";
+const VIDEO_POSTER = "/images/hero/annur-hero-desktop.jpeg";
 
 const advantages = [
   {
@@ -69,6 +74,46 @@ const gallery = [
 ];
 
 export function About() {
+  const [isOpen, setIsOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      videoRef.current?.pause();
+      return;
+    }
+
+    const playVideo = async () => {
+      try {
+        await videoRef.current?.play();
+      } catch {
+        // Autoplay may be blocked; controls remain available.
+      }
+    };
+
+    void playVideo();
+  }, [isOpen]);
+
+  const closeModal = () => setIsOpen(false);
+
   return (
     <section id="about" className={styles.about}>
       <Container>
@@ -82,15 +127,14 @@ export function About() {
 
         <div className={styles.media}>
           <Reveal className={styles.videoBlock}>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
               className={styles.videoFrame}
-              aria-label="Смотреть презентацию комплекса"
+              aria-label="Открыть видеопрезентацию"
+              onClick={() => setIsOpen(true)}
             >
               <Image
-                src="/images/hero/annur-hero-desktop.jpeg"
+                src={VIDEO_POSTER}
                 alt="Видеопрезентация МФК АН-НУР"
                 fill
                 sizes="(max-width: 900px) 100vw, 720px"
@@ -99,7 +143,7 @@ export function About() {
               <span className={styles.play}>
                 <Play size={28} fill="currentColor" />
               </span>
-            </a>
+            </button>
             <p className={styles.videoCaption}>
               Видеопрезентация МФК «АН-НУР»
             </p>
@@ -138,6 +182,57 @@ export function About() {
           })}
         </div>
       </Container>
+
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Видеопрезентация МФК АН-НУР"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <button
+              type="button"
+              className={styles.backdrop}
+              aria-label="Закрыть видео"
+              onClick={closeModal}
+            />
+
+            <motion.div
+              className={styles.modalContent}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <button
+                type="button"
+                className={styles.close}
+                aria-label="Закрыть"
+                onClick={closeModal}
+              >
+                <X size={22} strokeWidth={1.8} />
+              </button>
+
+              <video
+                ref={videoRef}
+                className={styles.modalVideo}
+                controls
+                playsInline
+                autoPlay
+                preload="auto"
+                poster={VIDEO_POSTER}
+              >
+                <source src={VIDEO_SRC} type="video/mp4" />
+              </video>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

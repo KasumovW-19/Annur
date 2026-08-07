@@ -17,10 +17,12 @@
 .videoFrame {
   position: relative;
   display: block;
+  width: 100%;
   overflow: hidden;
   aspect-ratio: 16 / 10;
   background: #0d1d34;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
 }
 
 .videoImage {
@@ -57,6 +59,60 @@
   border-color: #c89b5b;
   background: rgba(200, 155, 91, 0.9);
   color: #071427;
+}
+
+.modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 8, 18, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+.modalContent {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1120px);
+  max-height: calc(100vh - 48px);
+}
+
+.close {
+  position: absolute;
+  z-index: 2;
+  top: -48px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transition:
+    border-color 200ms ease,
+    color 200ms ease;
+
+  &:hover {
+    border-color: #c89b5b;
+    color: #c89b5b;
+  }
+}
+
+.modalVideo {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 48px);
+  background: #000000;
+  object-fit: contain;
 }
 
 .videoCaption {
@@ -143,6 +199,18 @@
 @media (max-width: 768px) {
   .about {
     padding: 80px 0;
+  }
+
+  .modal {
+    padding: 16px;
+  }
+
+  .close {
+    top: -44px;
+  }
+
+  .modalVideo {
+    max-height: calc(100vh - 32px);
   }
 
   .advantages {
