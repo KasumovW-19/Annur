@@ -21,42 +21,27 @@ const fadeUp = {
 };
 
 export function Hero() {
-  const commonImageProps = {
+  const {
+    props: { srcSet, ...imageProps },
+  } = getImageProps({
     alt: "МФК АН-НУР в Грозном",
     sizes: "100vw",
-    loading: "eager" as const,
-    fetchPriority: "high" as const,
-  };
-
-  const {
-    props: { srcSet: desktopSrcSet },
-  } = getImageProps({
-    ...commonImageProps,
-    src: "/images/hero/annur-hero-desktop.jpeg",
+    loading: "eager",
+    fetchPriority: "high",
+    src: "/images/common/hero.jpeg",
     width: 1920,
     height: 1080,
     quality: 85,
   });
 
-  const {
-    props: { srcSet: mobileSrcSet, ...mobileImageProps },
-  } = getImageProps({
-    ...commonImageProps,
-    src: "/images/hero/annur-hero-mobile.jpg",
-    width: 900,
-    height: 1600,
-    quality: 82,
-  });
-
   return (
     <section id="hero" className={styles.hero}>
       <picture className={styles.background}>
-        <source media="(min-width: 769px)" srcSet={desktopSrcSet} />
-        <source media="(max-width: 768px)" srcSet={mobileSrcSet} />
+        <source srcSet={srcSet} />
         <img
-          {...mobileImageProps}
+          {...imageProps}
           className={styles.backgroundImage}
-          alt={commonImageProps.alt}
+          alt="МФК АН-НУР в Грозном"
         />
       </picture>
 

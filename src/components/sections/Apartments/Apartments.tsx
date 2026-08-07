@@ -1,35 +1,38 @@
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/Button/Button";
 import { Container } from "@/components/ui/Container/Container";
 import { Reveal } from "@/components/ui/Reveal/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading/SectionHeading";
-import {
-  apartments,
-  type ApartmentRooms,
-} from "@/data/apartments";
+import { apartments, type Apartment } from "@/data/apartments";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { formatPrice } from "@/lib/format";
 
 import styles from "./Apartments.module.scss";
 
-type FilterValue = "all" | ApartmentRooms;
-
-const filters: { value: FilterValue; label: string }[] = [
-  { value: "all", label: "Все" },
-  { value: 1, label: "1-комнатные" },
-  { value: 2, label: "2-комнатные" },
-  { value: 3, label: "3-комнатные" },
-];
-
 export function Apartments() {
-  const [filter, setFilter] = useState<FilterValue>("all");
+  const [active, setActive] = useState<Apartment | null>(null);
 
-  const filtered = useMemo(() => {
-    if (filter === "all") return apartments;
-    return apartments.filter((item) => item.rooms === filter);
-  }, [filter]);
+  useEffect(() => {
+    if (!active) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActive(null);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [active]);
 
   return (
     <section id="apartments" className={styles.apartments}>
@@ -43,30 +46,16 @@ export function Apartments() {
           />
         </Reveal>
 
-        <Reveal>
-          <div className={styles.filters} role="tablist">
-            {filters.map((item) => (
-              <button
-                key={item.label}
-                type="button"
-                role="tab"
-                aria-selected={filter === item.value}
-                className={`${styles.filter} ${
-                  filter === item.value ? styles.active : ""
-                }`}
-                onClick={() => setFilter(item.value)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </Reveal>
-
         <div className={styles.grid}>
-          {filtered.map((apartment, index) => (
+          {apartments.map((apartment, index) => (
             <Reveal key={apartment.id} delay={index * 0.05}>
               <article className={styles.card}>
-                <div className={styles.imageWrap}>
+                <button
+                  type="button"
+                  className={styles.imageWrap}
+                  aria-label={`Открыть планировку: ${apartment.title}`}
+                  onClick={() => setActive(apartment)}
+                >
                   <Image
                     src={apartment.image}
                     alt={apartment.title}
@@ -74,7 +63,7 @@ export function Apartments() {
                     sizes="(max-width: 768px) 100vw, 380px"
                     className={styles.image}
                   />
-                </div>
+                </button>
 
                 <div className={styles.body}>
                   <p className={styles.rooms}>
@@ -90,6 +79,12 @@ export function Apartments() {
                     <div>
                       <span>Цена</span>
                       <strong>{formatPrice(apartment.price)}</strong>
+                    </div>
+                    <div className={styles.metaWide}>
+                      <span>Первоначальный взнос</span>
+                      <strong>
+                        {formatPrice(apartment.downPayment)}
+                      </strong>
                     </div>
                   </div>
 
@@ -107,6 +102,61 @@ export function Apartments() {
           ))}
         </div>
       </Container>
+
+      <AnimatePresence>
+        {active ? (
+          <motion.div
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-label={active.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <button
+              type="button"
+              className={styles.backdrop}
+              aria-label="Закрыть"
+              onClick={() => setActive(null)}
+            />
+
+            <motion.div
+              className={styles.modalContent}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <button
+                type="button"
+                className={styles.close}
+                aria-label="Закрыть"
+                onClick={() => setActive(null)}
+              >
+                <X size={22} strokeWidth={1.8} />
+              </button>
+
+              <div className={styles.modalImageWrap}>
+                <Image
+                  src={active.image}
+                  alt={active.title}
+                  fill
+                  sizes="100vw"
+                  className={styles.modalImage}
+                  priority
+                />
+              </div>
+
+              <p className={styles.modalCaption}>
+                {active.title} · {active.area} м² ·{" "}
+                {formatPrice(active.price)}
+              </p>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

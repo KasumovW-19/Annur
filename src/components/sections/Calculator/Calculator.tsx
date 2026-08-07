@@ -29,19 +29,29 @@ export function Calculator() {
   const [pricePerM2, setPricePerM2] = useState(
     String(DEFAULT_PRICE_PER_M2),
   );
+  const [downPayment, setDownPayment] = useState(
+    String(58 * DOWN_PAYMENT_PER_M2),
+  );
 
   const result = useMemo(() => {
     const areaValue = parseValue(area);
     const priceValue = parseValue(pricePerM2);
+    const downPaymentValue = parseValue(downPayment);
     const basePrice = areaValue * priceValue;
     const discount = basePrice * (DISCOUNT_PERCENT / 100);
     const finalPrice = basePrice - discount;
-    const downPayment = areaValue * DOWN_PAYMENT_PER_M2;
     const monthly =
-      Math.max(finalPrice - downPayment, 0) / INSTALLMENT_MONTHS;
+      Math.max(finalPrice - downPaymentValue, 0) / INSTALLMENT_MONTHS;
 
-    return { basePrice, discount, finalPrice, downPayment, monthly };
-  }, [area, pricePerM2]);
+    return {
+      basePrice,
+      discount,
+      finalPrice,
+      downPayment: downPaymentValue,
+      monthly,
+      minDownPayment: areaValue * DOWN_PAYMENT_PER_M2,
+    };
+  }, [area, pricePerM2, downPayment]);
 
   return (
     <section id="calculator" className={styles.calculator}>
@@ -79,9 +89,23 @@ export function Calculator() {
                 />
               </label>
 
+              <label className={styles.field}>
+                <span>Первоначальный взнос, ₽</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="Например, 580000"
+                  value={downPayment}
+                  onChange={(event) => setDownPayment(event.target.value)}
+                />
+              </label>
+
               <p className={styles.hint}>
-                Минимальный взнос — {formatPrice(DOWN_PAYMENT_PER_M2)} за 1 м².
-                Скидка {DISCOUNT_PERCENT}% действует до 5 октября.
+                Минимальный взнос — {formatPrice(DOWN_PAYMENT_PER_M2)} за 1 м²
+                {result.minDownPayment > 0
+                  ? ` (от ${formatPrice(result.minDownPayment)})`
+                  : ""}
+                . Скидка {DISCOUNT_PERCENT}% действует до 5 октября.
               </p>
             </div>
 
