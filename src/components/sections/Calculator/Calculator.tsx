@@ -15,15 +15,28 @@ import { formatPrice } from "@/lib/format";
 
 import styles from "./Calculator.module.scss";
 
+function parseValue(value: string) {
+  const normalized = value.trim().replace(",", ".");
+
+  if (!normalized) return 0;
+
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 export function Calculator() {
-  const [area, setArea] = useState(58);
-  const [pricePerM2, setPricePerM2] = useState(DEFAULT_PRICE_PER_M2);
+  const [area, setArea] = useState("58");
+  const [pricePerM2, setPricePerM2] = useState(
+    String(DEFAULT_PRICE_PER_M2),
+  );
 
   const result = useMemo(() => {
-    const basePrice = area * pricePerM2;
+    const areaValue = parseValue(area);
+    const priceValue = parseValue(pricePerM2);
+    const basePrice = areaValue * priceValue;
     const discount = basePrice * (DISCOUNT_PERCENT / 100);
     const finalPrice = basePrice - discount;
-    const downPayment = area * DOWN_PAYMENT_PER_M2;
+    const downPayment = areaValue * DOWN_PAYMENT_PER_M2;
     const monthly =
       Math.max(finalPrice - downPayment, 0) / INSTALLMENT_MONTHS;
 
@@ -47,28 +60,22 @@ export function Calculator() {
               <label className={styles.field}>
                 <span>Площадь квартиры, м²</span>
                 <input
-                  type="number"
-                  min={20}
-                  max={200}
-                  step={0.1}
+                  type="text"
+                  inputMode="decimal"
+                  placeholder="Например, 58"
                   value={area}
-                  onChange={(event) =>
-                    setArea(Number(event.target.value) || 0)
-                  }
+                  onChange={(event) => setArea(event.target.value)}
                 />
               </label>
 
               <label className={styles.field}>
                 <span>Цена за м², ₽</span>
                 <input
-                  type="number"
-                  min={50000}
-                  max={500000}
-                  step={1000}
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="Например, 165000"
                   value={pricePerM2}
-                  onChange={(event) =>
-                    setPricePerM2(Number(event.target.value) || 0)
-                  }
+                  onChange={(event) => setPricePerM2(event.target.value)}
                 />
               </label>
 

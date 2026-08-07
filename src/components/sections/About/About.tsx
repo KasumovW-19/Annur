@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   Building2,
   Bus,
+  ChevronLeft,
+  ChevronRight,
   GraduationCap,
   Moon,
   MapPin,
@@ -56,35 +58,73 @@ const advantages = [
 
 const gallery = [
   {
-    src: "/images/gallery/gallery-1.jpeg",
-    alt: "Фасад МФК АН-НУР",
+    src: "/images/plan/plan-1.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 1",
   },
   {
-    src: "/images/gallery/gallery-2.jpeg",
-    alt: "Архитектура комплекса",
+    src: "/images/plan/plan-2.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 2",
   },
   {
-    src: "/images/gallery/gallery-3.jpg",
-    alt: "Вид комплекса",
+    src: "/images/plan/plan-3.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 3",
   },
   {
-    src: "/images/gallery/gallery-4.jpeg",
-    alt: "Территория МФК АН-НУР",
+    src: "/images/plan/plan-4.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 4",
+  },
+  {
+    src: "/images/plan/plan-5.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 5",
+  },
+  {
+    src: "/images/plan/plan-6.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 6",
+  },
+  {
+    src: "/images/plan/plan-7.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 7",
+  },
+  {
+    src: "/images/plan/plan-8.jpeg",
+    alt: "Превью МФК АН-НУР к сдаче — вид 8",
   },
 ];
 
 export function About() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const isGalleryOpen = galleryIndex !== null;
+  const isModalOpen = isVideoOpen || isGalleryOpen;
+  const activeImage =
+    galleryIndex !== null ? gallery[galleryIndex] : null;
+
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isModalOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
+      if (event.key === "Escape") {
+        setIsVideoOpen(false);
+        setGalleryIndex(null);
+        return;
+      }
+
+      if (galleryIndex === null) return;
+
+      if (event.key === "ArrowLeft") {
+        setGalleryIndex(
+          (galleryIndex - 1 + gallery.length) % gallery.length,
+        );
+      }
+
+      if (event.key === "ArrowRight") {
+        setGalleryIndex((galleryIndex + 1) % gallery.length);
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -93,10 +133,10 @@ export function About() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [isOpen]);
+  }, [isModalOpen, galleryIndex]);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isVideoOpen) {
       videoRef.current?.pause();
       return;
     }
@@ -110,9 +150,22 @@ export function About() {
     };
 
     void playVideo();
-  }, [isOpen]);
+  }, [isVideoOpen]);
 
-  const closeModal = () => setIsOpen(false);
+  const closeVideo = () => setIsVideoOpen(false);
+  const closeGallery = () => setGalleryIndex(null);
+
+  const showPrev = () => {
+    if (galleryIndex === null) return;
+    setGalleryIndex(
+      (galleryIndex - 1 + gallery.length) % gallery.length,
+    );
+  };
+
+  const showNext = () => {
+    if (galleryIndex === null) return;
+    setGalleryIndex((galleryIndex + 1) % gallery.length);
+  };
 
   return (
     <section id="about" className={styles.about}>
@@ -131,13 +184,13 @@ export function About() {
               type="button"
               className={styles.videoFrame}
               aria-label="Открыть видеопрезентацию"
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsVideoOpen(true)}
             >
               <Image
                 src={VIDEO_POSTER}
                 alt="Видеопрезентация МФК АН-НУР"
                 fill
-                sizes="(max-width: 900px) 100vw, 720px"
+                sizes="(max-width: 900px) 100vw, 1120px"
                 className={styles.videoImage}
               />
               <span className={styles.play}>
@@ -148,21 +201,36 @@ export function About() {
               Видеопрезентация МФК «АН-НУР»
             </p>
           </Reveal>
-
-          <Reveal className={styles.gallery} delay={0.1}>
-            {gallery.map((item) => (
-              <figure key={item.src} className={styles.galleryItem}>
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 280px"
-                  className={styles.galleryImage}
-                />
-              </figure>
-            ))}
-          </Reveal>
         </div>
+
+        <Reveal>
+          <div className={styles.galleryHeader}>
+            <p className={styles.galleryEyebrow}>Визуализация</p>
+            <h3 className={styles.galleryTitle}>
+              Как будет выглядеть комплекс к сдаче
+            </h3>
+          </div>
+        </Reveal>
+
+        <Reveal className={styles.gallery} delay={0.08}>
+          {gallery.map((item, index) => (
+            <button
+              key={item.src}
+              type="button"
+              className={styles.galleryItem}
+              aria-label={`Открыть фото: ${item.alt}`}
+              onClick={() => setGalleryIndex(index)}
+            >
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className={styles.galleryImage}
+              />
+            </button>
+          ))}
+        </Reveal>
 
         <div className={styles.advantages}>
           {advantages.map((item, index) => {
@@ -184,7 +252,7 @@ export function About() {
       </Container>
 
       <AnimatePresence>
-        {isOpen ? (
+        {isVideoOpen ? (
           <motion.div
             className={styles.modal}
             role="dialog"
@@ -199,7 +267,7 @@ export function About() {
               type="button"
               className={styles.backdrop}
               aria-label="Закрыть видео"
-              onClick={closeModal}
+              onClick={closeVideo}
             />
 
             <motion.div
@@ -213,7 +281,7 @@ export function About() {
                 type="button"
                 className={styles.close}
                 aria-label="Закрыть"
-                onClick={closeModal}
+                onClick={closeVideo}
               >
                 <X size={22} strokeWidth={1.8} />
               </button>
@@ -230,6 +298,79 @@ export function About() {
                 <source src={VIDEO_SRC} type="video/mp4" />
               </video>
             </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isGalleryOpen && activeImage ? (
+          <motion.div
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-label={activeImage.alt}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <button
+              type="button"
+              className={styles.backdrop}
+              aria-label="Закрыть фото"
+              onClick={closeGallery}
+            />
+
+            <button
+              type="button"
+              className={`${styles.nav} ${styles.navPrev}`}
+              aria-label="Предыдущее фото"
+              onClick={showPrev}
+            >
+              <ChevronLeft size={28} strokeWidth={1.6} />
+            </button>
+
+            <motion.div
+              key={activeImage.src}
+              className={`${styles.modalContent} ${styles.imageModalContent}`}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <button
+                type="button"
+                className={styles.close}
+                aria-label="Закрыть"
+                onClick={closeGallery}
+              >
+                <X size={22} strokeWidth={1.8} />
+              </button>
+
+              <div className={styles.modalImageWrap}>
+                <Image
+                  src={activeImage.src}
+                  alt={activeImage.alt}
+                  fill
+                  sizes="100vw"
+                  className={styles.modalImage}
+                  priority
+                />
+              </div>
+
+              <p className={styles.modalCounter}>
+                {(galleryIndex ?? 0) + 1} / {gallery.length}
+              </p>
+            </motion.div>
+
+            <button
+              type="button"
+              className={`${styles.nav} ${styles.navNext}`}
+              aria-label="Следующее фото"
+              onClick={showNext}
+            >
+              <ChevronRight size={28} strokeWidth={1.6} />
+            </button>
           </motion.div>
         ) : null}
       </AnimatePresence>
