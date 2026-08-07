@@ -1,0 +1,135 @@
+.calculator {
+  padding: 110px 0;
+  background: #071427;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0d1d34;
+}
+
+.controls {
+  padding: 40px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+
+  span {
+    color: #aab2c0;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+    outline: none;
+    transition: border-color 200ms ease;
+
+    &:focus {
+      border-color: #c89b5b;
+    }
+  }
+}
+
+.hint {
+  color: #7d8796;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.results {
+  padding: 40px;
+  background:
+    linear-gradient(160deg, rgba(200, 155, 91, 0.1), transparent 45%),
+    #08182b;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  span {
+    color: #aab2c0;
+    font-size: 14px;
+  }
+
+  strong {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-align: right;
+  }
+}
+
+.accent {
+  color: #d2a667 !important;
+}
+
+.total {
+  margin-top: 4px;
+
+  span,
+  strong {
+    color: #ffffff;
+  }
+
+  strong {
+    font-size: 26px;
+  }
+}
+
+.button {
+  width: 100%;
+  margin-top: 28px;
+}
+
+@media (max-width: 900px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@media (max-width: 768px) {
+  .calculator {
+    padding: 80px 0;
+  }
+
+  .controls,
+  .results {
+    padding: 28px 22px;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    strong {
+      text-align: left;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.finalCta {
+  position: relative;
+  padding: 120px 0;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(7, 20, 39, 0.55), rgba(7, 20, 39, 0.88)),
+    url("/images/hero/annur-hero-desktop.jpeg") center / cover no-repeat;
+}
+
+.inner {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: 18px;
+  color: #d2a667;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.inner h2 {
+  color: #ffffff;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.text {
+  max-width: 520px;
+  margin: 20px auto 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.button {
+  margin-top: 34px;
+}
+
+@media (max-width: 768px) {
+  .finalCta {
+    padding: 90px 0;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,50 @@
+.footer {
+  padding: 48px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050f1c;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.logo {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.copy {
+  max-width: 360px;
+  margin-top: 12px;
+  color: #7d8796;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+
+  a {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 200ms ease;
+
+    &:hover {
+      color: #c89b5b;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
