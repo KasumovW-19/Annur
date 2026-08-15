@@ -6,6 +6,8 @@ import { Reveal } from "@/components/ui/Reveal/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading/SectionHeading";
 import {
   DEFAULT_PRICE_PER_M2,
+  DEFERRED_PAYMENT,
+  DEFERRED_PAYMENT_YEARS,
   DISCOUNT_PERCENT,
   DOWN_PAYMENT_PER_M2,
   INSTALLMENT_MONTHS,
@@ -32,26 +34,34 @@ export function Calculator() {
   const [downPayment, setDownPayment] = useState(
     String(58 * DOWN_PAYMENT_PER_M2),
   );
+  const [withDeferredPayment, setWithDeferredPayment] = useState(true);
 
   const result = useMemo(() => {
     const areaValue = parseValue(area);
     const priceValue = parseValue(pricePerM2);
     const downPaymentValue = parseValue(downPayment);
+    const deferredPaymentValue = withDeferredPayment
+      ? DEFERRED_PAYMENT
+      : 0;
     const basePrice = areaValue * priceValue;
     const discount = basePrice * (DISCOUNT_PERCENT / 100);
     const finalPrice = basePrice - discount;
     const monthly =
-      Math.max(finalPrice - downPaymentValue, 0) / INSTALLMENT_MONTHS;
+      Math.max(
+        finalPrice - downPaymentValue - deferredPaymentValue,
+        0,
+      ) / INSTALLMENT_MONTHS;
 
     return {
       basePrice,
       discount,
       finalPrice,
       downPayment: downPaymentValue,
+      deferredPayment: deferredPaymentValue,
       monthly,
       minDownPayment: areaValue * DOWN_PAYMENT_PER_M2,
     };
-  }, [area, pricePerM2, downPayment]);
+  }, [area, pricePerM2, downPayment, withDeferredPayment]);
 
   return (
     <section id="calculator" className={styles.calculator}>
@@ -100,6 +110,36 @@ export function Calculator() {
                 />
               </label>
 
+              <div className={styles.toggleField}>
+                <span className={styles.toggleLabel}>Отложенный платёж</span>
+                <p className={styles.toggleHint}>
+                  {formatPrice(DEFERRED_PAYMENT)} на {DEFERRED_PAYMENT_YEARS}{" "}
+                  лет
+                </p>
+                <div className={styles.toggle} role="group">
+                  <button
+                    type="button"
+                    className={`${styles.toggleOption} ${
+                      withDeferredPayment ? styles.toggleActive : ""
+                    }`}
+                    aria-pressed={withDeferredPayment}
+                    onClick={() => setWithDeferredPayment(true)}
+                  >
+                    С платежом
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.toggleOption} ${
+                      !withDeferredPayment ? styles.toggleActive : ""
+                    }`}
+                    aria-pressed={!withDeferredPayment}
+                    onClick={() => setWithDeferredPayment(false)}
+                  >
+                    Без платежа
+                  </button>
+                </div>
+              </div>
+
               <p className={styles.hint}>
                 Минимальный взнос — {formatPrice(DOWN_PAYMENT_PER_M2)} за 1 м²
                 {result.minDownPayment > 0
@@ -127,6 +167,16 @@ export function Calculator() {
               <div className={styles.row}>
                 <span>Первоначальный взнос</span>
                 <strong>{formatPrice(result.downPayment)}</strong>
+              </div>
+              <div className={styles.row}>
+                <span>
+                  Отложенный платёж ({DEFERRED_PAYMENT_YEARS} лет)
+                </span>
+                <strong>
+                  {withDeferredPayment
+                    ? formatPrice(DEFERRED_PAYMENT)
+                    : "Без платежа"}
+                </strong>
               </div>
               <div className={styles.row}>
                 <span>Ежемесячный платёж ({INSTALLMENT_MONTHS} мес.)</span>

@@ -91,6 +91,11 @@ export function Promotion() {
                   <strong>0 ₽</strong>
                   <span>Скрытых переплат</span>
                 </div>
+
+                <div className={styles.benefit}>
+                  <strong>1 млн</strong>
+                  <span>Отложенный платёж на 5 лет</span>
+                </div>
               </div>
 
               <Button

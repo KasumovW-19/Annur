@@ -102,7 +102,7 @@
 
 .benefits {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
   max-width: 680px;
   margin-top: 44px;
@@ -114,11 +114,19 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 24px 24px 24px 0;
+  padding: 22px 24px 22px 0;
 
-  &:not(:first-child) {
+  &:nth-child(odd) {
+    padding-right: 24px;
+  }
+
+  &:nth-child(even) {
     padding-left: 24px;
     border-left: 1px solid rgba(11, 27, 46, 0.12);
+  }
+
+  &:nth-child(n + 3) {
+    border-top: 1px solid rgba(11, 27, 46, 0.12);
   }
 
   strong {
@@ -331,10 +339,15 @@
   .benefit {
     padding: 20px 0;
 
-    &:not(:first-child) {
+    &:nth-child(odd),
+    &:nth-child(even) {
       padding-left: 0;
-      border-top: 1px solid rgba(11, 27, 46, 0.12);
+      padding-right: 0;
       border-left: 0;
+    }
+
+    &:not(:first-child) {
+      border-top: 1px solid rgba(11, 27, 46, 0.12);
     }
   }
 
