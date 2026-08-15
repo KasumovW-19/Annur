@@ -11,3 +11,5 @@ export const DISCOUNT_PERCENT = 10;
 export const DOWN_PAYMENT_PER_M2 = 10_000;
 export const INSTALLMENT_MONTHS = 72;
 export const DEFAULT_PRICE_PER_M2 = 165_000;
+export const DEFERRED_PAYMENT = 1_000_000;
+export const DEFERRED_PAYMENT_YEARS = 5;

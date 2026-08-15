@@ -101,29 +101,6 @@ export function Hero() {
             </Button>
           </motion.div>
         </div>
-
-        <motion.div
-          className={styles.features}
-          custom={0.62}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          <div className={styles.feature}>
-            <strong>72 месяца</strong>
-            <span>Рассрочка</span>
-          </div>
-
-          <div className={styles.feature}>
-            <strong>−10%</strong>
-            <span>Скидка до 5 октября</span>
-          </div>
-
-          <div className={styles.feature}>
-            <strong>05.10.2026</strong>
-            <span>Сдача комплекса</span>
-          </div>
-        </motion.div>
       </Container>
     </section>
   );

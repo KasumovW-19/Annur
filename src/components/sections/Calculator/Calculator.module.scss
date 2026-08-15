@@ -45,6 +45,51 @@
   }
 }
 
+.toggleField {
+  margin-bottom: 24px;
+}
+
+.toggleLabel {
+  display: block;
+  margin-bottom: 6px;
+  color: #aab2c0;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.toggleHint {
+  margin-bottom: 12px;
+  color: #c89b5b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.toggleOption {
+  min-height: 54px;
+  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.toggleActive {
+  background: rgba(200, 155, 91, 0.18);
+  color: #d2a667;
+}
+
 .hint {
   color: #7d8796;
   font-size: 14px;

@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/Reveal/Reveal";
 import styles from "./Description.module.scss";
 
 const highlights = [
-  { value: "от 38 м²", label: "Площадь квартир" },
+  { value: "от 52 м²", label: "Площадь квартир" },
   { value: "Центр", label: "Нового Грозного" },
   { value: "05.10.2026", label: "Срок сдачи" },
 ];
@@ -35,16 +35,6 @@ export function Description() {
             ))}
           </Reveal>
         </div>
-
-        <Reveal delay={0.08}>
-          <div className={styles.delivery}>
-            <div>
-              <p className={styles.deliveryEyebrow}>Ключевые даты</p>
-              <h3>Сдача комплекса — 5 октября 2026 года</h3>
-              <p>Вместе с открытием нового пешеходного бульвара</p>
-            </div>
-          </div>
-        </Reveal>
       </Container>
     </section>
   );
