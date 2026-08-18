@@ -1,58 +1,74 @@
+@use "../../../styles/variables" as *;
+
 .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 54px;
-    padding: 0 28px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    font-family: var(--font-manrope), Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0.01em;
-    text-align: center;
-    transition:
-      background-color 200ms ease,
-      border-color 200ms ease,
-      color 200ms ease,
-      transform 200ms ease;
-  
-    &:hover {
-      transform: translateY(-2px);
-    }
-  
-    &:active {
-      transform: translateY(0);
-    }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 28px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    transform 200ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
   }
-  
-  .primary {
-    background: #c89b5b;
-    color: #071427;
-  
-    &:hover {
-      background: #ddb474;
-    }
+
+  &:active {
+    transform: translateY(0);
   }
-  
-  .secondary {
-    border-color: rgba(255, 255, 255, 0.32);
-    background: rgba(255, 255, 255, 0.04);
-    color: #ffffff;
-    backdrop-filter: blur(8px);
-  
-    &:hover {
-      border-color: #c89b5b;
-      color: #c89b5b;
-    }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 3px;
   }
-  
-  @media (max-width: 540px) {
-    .button {
-      width: 100%;
-      min-height: 58px;
-      padding-inline: 20px;
-      font-size: 15px;
-    }
+}
+
+.primary {
+  background: $color-primary;
+  color: $color-white;
+
+  &:hover {
+    background: $color-primary-hover;
   }
+
+  &:active {
+    background: $color-primary-active;
+  }
+}
+
+.secondary {
+  border-color: $color-border-soft;
+  background: rgba(255, 255, 255, 0.04);
+  color: $color-white;
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+
+  &:active {
+    border-color: $color-primary-hover;
+    color: $color-primary-hover;
+  }
+}
+
+@media (max-width: 540px) {
+  .button {
+    width: 100%;
+    min-height: 58px;
+    padding-inline: 20px;
+    font-size: 15px;
+  }
+}

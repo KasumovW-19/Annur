@@ -1,9 +1,39 @@
-$color-background: #071427;
-$color-background-light: #0d1d34;
-$color-text: #f7f4ee;
-$color-text-muted: #aab2c0;
-$color-accent: #c99a54;
-$color-border: rgba(255, 255, 255, 0.14);
+// ─── Core palette: black / white / red ───
+
+$color-black: #050505;
+$color-surface: #0f0f0f;
+$color-surface-elevated: #171717;
+$color-surface-hover: #1c1c1c;
+
+$color-white: #ffffff;
+$color-light: #f5f5f5;
+$color-light-muted: #ebebeb;
+
+$color-foreground: #ffffff;
+$color-foreground-muted: #a3a3a3;
+$color-foreground-subtle: #737373;
+
+$color-on-light: #0a0a0a;
+$color-on-light-muted: #525252;
+$color-on-light-subtle: #737373;
+
+$color-primary: #dc2626;
+$color-primary-hover: #b91c1c;
+$color-primary-active: #991b1b;
+$color-primary-soft: rgba(220, 38, 38, 0.14);
+$color-primary-glow: rgba(220, 38, 38, 0.28);
+
+$color-border: #262626;
+$color-border-soft: rgba(255, 255, 255, 0.12);
+$color-border-on-light: rgba(10, 10, 10, 0.12);
+
+// ─── Semantic aliases ───
+
+$color-background: $color-black;
+$color-background-light: $color-surface;
+$color-text: $color-foreground;
+$color-text-muted: $color-foreground-muted;
+$color-accent: $color-primary;
 
 $container-width: 1240px;
 

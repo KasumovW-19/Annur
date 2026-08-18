@@ -1,3 +1,5 @@
+@use "../../../styles/variables" as *;
+
 .heading {
   max-width: 720px;
   margin-bottom: 48px;
@@ -5,7 +7,7 @@
 
 .eyebrow {
   margin-bottom: 18px;
-  color: #c89b5b;
+  color: $color-primary;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -13,7 +15,7 @@
 }
 
 .title {
-  color: #f7f4ee;
+  color: $color-foreground;
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: clamp(36px, 4.5vw, 56px);
   font-weight: 500;
@@ -24,22 +26,22 @@
 .description {
   max-width: 560px;
   margin-top: 18px;
-  color: #aab2c0;
+  color: $color-foreground-muted;
   font-size: 16px;
   line-height: 1.75;
 }
 
 .light {
   .title {
-    color: #0b1b2e;
+    color: $color-on-light;
   }
 
   .description {
-    color: #5f6873;
+    color: $color-on-light-muted;
   }
 
   .eyebrow {
-    color: #a17138;
+    color: $color-primary;
   }
 }
 

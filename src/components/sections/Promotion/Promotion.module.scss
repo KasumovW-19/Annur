@@ -5,10 +5,10 @@
   background:
     radial-gradient(
       circle at 85% 25%,
-      rgba(196, 149, 82, 0.14),
+      rgba(220, 38, 38, 0.14),
       transparent 30%
     ),
-    #f3efe7;
+    var(--light);
 }
 
 .promotion::before {
@@ -17,7 +17,7 @@
   right: -180px;
   width: 520px;
   height: 520px;
-  border: 1px solid rgba(117, 81, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.12);
   border-radius: 50%;
   content: "";
 }
@@ -28,7 +28,7 @@
   bottom: -280px;
   width: 620px;
   height: 620px;
-  border: 1px solid rgba(117, 81, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.08);
   border-radius: 50%;
   content: "";
 }
@@ -43,7 +43,7 @@
   overflow: hidden;
   min-height: 580px;
   background: #ffffff;
-  box-shadow: 0 34px 90px rgba(30, 40, 53, 0.12);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.12);
 }
 
 .decorativeLine {
@@ -53,7 +53,7 @@
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #936936 0%, #d2a667 50%, #936936 100%);
+  background: linear-gradient(90deg, var(--primary-active) 0%, var(--primary) 50%, var(--primary-active) 100%);
 }
 
 .content {
@@ -66,7 +66,7 @@
 
 .eyebrow {
   margin-bottom: 25px;
-  color: #a17138;
+  color: var(--primary);
   font-family: var(--font-manrope), Arial, sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -77,7 +77,7 @@
 
 .title {
   max-width: 720px;
-  color: #0b1b2e;
+  color: var(--on-light);
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: clamp(46px, 4.7vw, 70px);
   font-weight: 500;
@@ -86,14 +86,14 @@
 
   span {
     display: block;
-    color: #a17138;
+    color: var(--primary);
   }
 }
 
 .description {
   max-width: 620px;
   margin-top: 30px;
-  color: #5f6873;
+  color: var(--on-light-muted);
   font-family: var(--font-manrope), Arial, sans-serif;
   font-size: 17px;
   font-weight: 400;
@@ -106,8 +106,8 @@
   width: 100%;
   max-width: 680px;
   margin-top: 44px;
-  border-top: 1px solid rgba(11, 27, 46, 0.12);
-  border-bottom: 1px solid rgba(11, 27, 46, 0.12);
+  border-top: 1px solid rgba(10, 10, 10, 0.12);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.12);
 }
 
 .benefit {
@@ -122,15 +122,15 @@
 
   &:nth-child(even) {
     padding-left: 24px;
-    border-left: 1px solid rgba(11, 27, 46, 0.12);
+    border-left: 1px solid rgba(10, 10, 10, 0.12);
   }
 
   &:nth-child(n + 3) {
-    border-top: 1px solid rgba(11, 27, 46, 0.12);
+    border-top: 1px solid rgba(10, 10, 10, 0.12);
   }
 
   strong {
-    color: #0b1b2e;
+    color: var(--on-light);
     font-family: var(--font-manrope), Arial, sans-serif;
     font-size: 25px;
     font-weight: 700;
@@ -139,7 +139,7 @@
   }
 
   span {
-    color: #7a838d;
+    color: var(--on-light-subtle);
     font-family: var(--font-manrope), Arial, sans-serif;
     font-size: 12px;
     font-weight: 500;
@@ -159,7 +159,7 @@
   padding: 70px 54px;
   overflow: hidden;
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.04), transparent 48%), #08182b;
+    linear-gradient(150deg, rgba(255, 255, 255, 0.04), transparent 48%), var(--surface-elevated);
   color: #ffffff;
 }
 
@@ -169,7 +169,7 @@
   right: -100px;
   width: 320px;
   height: 320px;
-  border: 1px solid rgba(211, 167, 103, 0.16);
+  border: 1px solid rgba(220, 38, 38, 0.16);
   border-radius: 50%;
   content: "";
 }
@@ -180,7 +180,7 @@
   bottom: -160px;
   width: 360px;
   height: 360px;
-  border: 1px solid rgba(211, 167, 103, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.1);
   border-radius: 50%;
   content: "";
 }
@@ -200,7 +200,7 @@
 
   span {
     margin-bottom: 8px;
-    color: #d2a667;
+    color: var(--primary);
     font-family: var(--font-manrope), Arial, sans-serif;
     font-size: 13px;
     font-weight: 600;
@@ -266,7 +266,7 @@
 .deadline {
   max-width: 310px;
   margin-top: 30px;
-  color: #d2a667;
+  color: var(--primary);
   font-family: var(--font-manrope), Arial, sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -347,7 +347,7 @@
     }
 
     &:not(:first-child) {
-      border-top: 1px solid rgba(11, 27, 46, 0.12);
+      border-top: 1px solid rgba(10, 10, 10, 0.12);
     }
   }
 

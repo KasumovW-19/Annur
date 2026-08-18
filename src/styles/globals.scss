@@ -1,5 +1,33 @@
 @use "./variables" as *;
 
+:root {
+  --background: #{$color-black};
+  --surface: #{$color-surface};
+  --surface-elevated: #{$color-surface-elevated};
+  --surface-hover: #{$color-surface-hover};
+
+  --foreground: #{$color-foreground};
+  --foreground-muted: #{$color-foreground-muted};
+  --foreground-subtle: #{$color-foreground-subtle};
+
+  --on-light: #{$color-on-light};
+  --on-light-muted: #{$color-on-light-muted};
+
+  --primary: #{$color-primary};
+  --primary-hover: #{$color-primary-hover};
+  --primary-active: #{$color-primary-active};
+  --primary-soft: #{$color-primary-soft};
+
+  --border: #{$color-border};
+  --border-soft: #{$color-border-soft};
+  --border-on-light: #{$color-border-on-light};
+
+  --light: #{$color-light};
+  --light-muted: #{$color-light-muted};
+  --white: #{$color-white};
+  --on-light-subtle: #{$color-on-light-subtle};
+}
+
 *,
 *::before,
 *::after {
@@ -10,15 +38,15 @@
 
 html {
   scroll-behavior: smooth;
-  background: $color-background;
+  background: var(--background);
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: $color-background;
-  color: $color-text;
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -71,4 +99,9 @@ svg {
 
 main {
   min-height: 100vh;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--white);
 }

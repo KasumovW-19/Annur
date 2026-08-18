@@ -1,6 +1,8 @@
+@use "../../../styles/variables" as *;
+
 .faq {
   padding: 110px 0;
-  background: #f3efe7;
+  background: $color-light;
 }
 
 .list {
@@ -12,8 +14,8 @@
 
 .item {
   overflow: hidden;
-  border: 1px solid rgba(11, 27, 46, 0.1);
-  background: #ffffff;
+  border: 1px solid $color-border-on-light;
+  background: $color-white;
 }
 
 .trigger {
@@ -24,16 +26,25 @@
   width: 100%;
   padding: 22px 24px;
   text-align: left;
-  color: #0b1b2e;
+  color: $color-on-light;
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: 24px;
   font-weight: 500;
   line-height: 1.25;
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
 }
 
 .chevron {
   flex-shrink: 0;
-  color: #a17138;
+  color: $color-primary;
   transition: transform 220ms ease;
 }
 
@@ -46,7 +57,7 @@
 
   p {
     padding: 0 24px 22px;
-    color: #5f6873;
+    color: $color-on-light-muted;
     font-size: 16px;
     line-height: 1.7;
   }

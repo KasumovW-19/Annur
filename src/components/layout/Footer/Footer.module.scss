@@ -1,7 +1,9 @@
+@use "../../../styles/variables" as *;
+
 .footer {
   padding: 48px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: #050f1c;
+  border-top: 1px solid $color-border;
+  background: $color-black;
 }
 
 .container {
@@ -12,7 +14,7 @@
 }
 
 .logo {
-  color: #ffffff;
+  color: $color-white;
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -21,7 +23,7 @@
 .copy {
   max-width: 360px;
   margin-top: 12px;
-  color: #7d8796;
+  color: $color-foreground-subtle;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -38,7 +40,7 @@
     transition: color 200ms ease;
 
     &:hover {
-      color: #c89b5b;
+      color: $color-primary;
     }
   }
 }
