@@ -1,5 +1,50 @@
 @use "./variables" as *;
 
+:root {
+  --black: #{$color-true-black};
+  --white: #{$color-white};
+
+  --background: #{$color-background};
+  --surface: #{$color-surface};
+  --surface-elevated: #{$color-surface-elevated};
+  --surface-hover: #{$color-surface-hover};
+
+  --background-light: #{$color-background-light};
+  --surface-light: #{$color-surface-light};
+  --surface-light-muted: #{$color-surface-light-muted};
+
+  --foreground: #{$color-foreground};
+  --foreground-muted: #{$color-foreground-muted};
+  --foreground-subtle: #{$color-foreground-subtle};
+
+  --ink: #{$color-ink};
+  --ink-muted: #{$color-ink-muted};
+  --ink-subtle: #{$color-ink-subtle};
+
+  --primary: #{$color-primary};
+  --primary-hover: #{$color-primary-hover};
+  --primary-active: #{$color-primary-active};
+  --primary-foreground: #{$color-primary-foreground};
+  --accent: #{$color-accent};
+
+  --primary-muted: color-mix(in srgb, var(--primary) 16%, transparent);
+  --primary-soft: color-mix(in srgb, var(--primary) 10%, transparent);
+  --primary-glow: color-mix(in srgb, var(--primary) 32%, transparent);
+
+  --error: #{$color-error};
+  --error-muted: color-mix(in srgb, var(--error) 18%, transparent);
+  --success: #{$color-success};
+
+  --border: #{$color-border};
+  --border-muted: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --border-on-light: rgba(10, 10, 10, 0.1);
+  --border-on-light-strong: rgba(10, 10, 10, 0.16);
+
+  --overlay: rgba(0, 0, 0, 0.88);
+  --shadow-light: 0 28px 70px rgba(0, 0, 0, 0.08);
+}
+
 *,
 *::before,
 *::after {
@@ -10,15 +55,15 @@
 
 html {
   scroll-behavior: smooth;
-  background: $color-background;
+  background: var(--background);
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: $color-background;
-  color: $color-text;
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -71,4 +116,35 @@ svg {
 
 main {
   min-height: 100vh;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--foreground-subtle);
+  opacity: 1;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled,
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.45;
 }

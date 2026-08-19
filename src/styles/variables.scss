@@ -1,11 +1,40 @@
-$color-background: #071427;
-$color-background-light: #0d1d34;
-$color-text: #f7f4ee;
-$color-text-muted: #aab2c0;
-$color-accent: #c99a54;
-$color-border: rgba(255, 255, 255, 0.14);
+// Design tokens — black / white / red
+// CSS custom properties in globals.scss are the runtime source of truth.
+
+$color-black: #050505;
+$color-true-black: #000000;
+$color-white: #ffffff;
+
+$color-background: #050505;
+$color-surface: #111111;
+$color-surface-elevated: #171717;
+$color-surface-hover: #1c1c1c;
+
+$color-background-light: #f4f4f4;
+$color-surface-light: #ffffff;
+$color-surface-light-muted: #ececec;
+
+$color-foreground: #ffffff;
+$color-foreground-muted: #b3b3b3;
+$color-foreground-subtle: #8d8d8d;
+
+$color-ink: #0a0a0a;
+$color-ink-muted: #4a4a4a;
+$color-ink-subtle: #6b6b6b;
+
+$color-primary: #dc2626;
+$color-primary-hover: #b91c1c;
+$color-primary-active: #991b1b;
+$color-primary-foreground: #ffffff;
+$color-accent: #ef4444;
+
+$color-error: #ff4d4f;
+$color-success: #cfcfcf;
+
+$color-border: #262626;
+$color-text: $color-foreground;
+$color-text-muted: $color-foreground-muted;
 
 $container-width: 1240px;
-
 $breakpoint-tablet: 1024px;
 $breakpoint-mobile: 768px;

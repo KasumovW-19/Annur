@@ -1,6 +1,6 @@
 .faq {
   padding: 110px 0;
-  background: #f3efe7;
+  background: var(--background-light);
 }
 
 .list {
@@ -12,8 +12,22 @@
 
 .item {
   overflow: hidden;
-  border: 1px solid rgba(11, 27, 46, 0.1);
-  background: #ffffff;
+  border: 1px solid var(--border-on-light);
+  background: var(--surface-light);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+
+  &:hover {
+    border-color: var(--border-on-light-strong);
+  }
+
+  &:focus-within {
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border-on-light));
+  }
+}
+
+.open {
+  box-shadow: inset 2px 0 0 var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border-on-light));
 }
 
 .trigger {
@@ -24,16 +38,26 @@
   width: 100%;
   padding: 22px 24px;
   text-align: left;
-  color: #0b1b2e;
+  color: var(--ink);
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: 24px;
   font-weight: 500;
   line-height: 1.25;
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
 }
 
 .chevron {
   flex-shrink: 0;
-  color: #a17138;
+  color: var(--primary);
   transition: transform 220ms ease;
 }
 
@@ -46,7 +70,7 @@
 
   p {
     padding: 0 24px 22px;
-    color: #5f6873;
+    color: var(--ink-muted);
     font-size: 16px;
     line-height: 1.7;
   }

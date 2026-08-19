@@ -13,12 +13,24 @@
   color: #ffffff;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
   transition:
+    background-color 200ms ease,
     transform 200ms ease,
     box-shadow 200ms ease;
 
   &:hover {
+    background: #1ebe57;
     transform: translateY(-3px) scale(1.04);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.34);
+  }
+
+  &:active {
+    background: #19a34b;
+    transform: translateY(0) scale(1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #25d366;
+    outline-offset: 3px;
   }
 }
 

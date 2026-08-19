@@ -1,4 +1,3 @@
-import { getImageProps } from "next/image";
 import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/Button/Button";
@@ -21,29 +20,22 @@ const fadeUp = {
 };
 
 export function Hero() {
-  const {
-    props: { srcSet, ...imageProps },
-  } = getImageProps({
-    alt: "МФК АН-НУР в Грозном",
-    sizes: "100vw",
-    loading: "eager",
-    fetchPriority: "high",
-    src: "/images/common/hero.jpeg",
-    width: 1920,
-    height: 1080,
-    quality: 85,
-  });
-
   return (
     <section id="hero" className={styles.hero}>
-      <picture className={styles.background}>
-        <source srcSet={srcSet} />
-        <img
-          {...imageProps}
-          className={styles.backgroundImage}
-          alt="МФК АН-НУР в Грозном"
-        />
-      </picture>
+      <div className={styles.background}>
+        <video
+          className={styles.backgroundVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/images/common/hero.jpeg"
+          aria-hidden="true"
+        >
+          <source src="/videos/compressed.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       <div className={styles.overlay} />
 

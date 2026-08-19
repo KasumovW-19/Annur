@@ -1,7 +1,7 @@
 .footer {
   padding: 48px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: #050f1c;
+  border-top: 1px solid var(--border-muted);
+  background: var(--background);
 }
 
 .container {
@@ -12,16 +12,21 @@
 }
 
 .logo {
-  color: #ffffff;
+  color: var(--foreground);
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.22em;
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--accent);
+  }
 }
 
 .copy {
   max-width: 360px;
   margin-top: 12px;
-  color: #7d8796;
+  color: var(--foreground-muted);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -32,13 +37,14 @@
   gap: 18px 28px;
 
   a {
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--foreground-muted);
     font-size: 14px;
     font-weight: 500;
     transition: color 200ms ease;
 
-    &:hover {
-      color: #c89b5b;
+    &:hover,
+    &:focus-visible {
+      color: var(--accent);
     }
   }
 }
