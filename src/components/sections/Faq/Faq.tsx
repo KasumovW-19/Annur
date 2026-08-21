@@ -5,34 +5,9 @@ import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/ui/Container/Container";
 import { Reveal } from "@/components/ui/Reveal/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading/SectionHeading";
+import { faqs } from "@/data/faq";
 
 import styles from "./Faq.module.scss";
-
-const faqs = [
-  {
-    question: "Какие условия покупки?",
-    answer: "Доступна рассрочка до 72 месяцев.",
-  },
-  {
-    question: "Есть ли скидка?",
-    answer:
-      "Да, действует скидка 10% до 5 октября в честь Дня города.",
-  },
-  {
-    question: "Когда сдача комплекса?",
-    answer:
-      "5 октября 2026 года вместе с новым пешеходным бульваром.",
-  },
-  {
-    question: "Где находится МФК АН-НУР?",
-    answer: "ул. Назарбаева, новый проспект Путина.",
-  },
-  {
-    question: "Какой минимальный взнос?",
-    answer:
-      "Минимальный взнос рассчитывается из 10 000 рублей за 1 м².",
-  },
-];
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -45,7 +20,7 @@ export function FAQ() {
             light
             eyebrow="FAQ"
             title="Частые вопросы"
-            description="Ответы на ключевые вопросы о покупке квартиры в МФК «АН-НУР»."
+            description="Ответы на вопросы о покупке квартиры и недвижимости в Грозном — МФК «АН-НУР»."
           />
         </Reveal>
 

@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/Reveal/Reveal";
 import styles from "./Description.module.scss";
 
 const highlights = [
-  { value: "от 52 м²", label: "Площадь квартир" },
+  { value: "от 61 м²", label: "Площадь квартир" },
   { value: "Центр", label: "Нового Грозного" },
   { value: "05.10.2026", label: "Срок сдачи" },
 ];
@@ -17,12 +17,12 @@ export function Description() {
           <Reveal>
             <p className={styles.eyebrow}>О проекте</p>
             <h2 className={styles.title}>
-              Современный жилой комплекс с комфортными планировками
+              Квартиры в Грозном с комфортными планировками
             </h2>
             <p className={styles.text}>
-              МФК «АН-НУР» — современный жилой комплекс с комфортными
-              планировками, выгодными условиями покупки и развитой
-              инфраструктурой вокруг.
+              МФК «АН-НУР» — недвижимость в Грозном: современные квартиры,
+              выгодные условия покупки и развитая инфраструктура в центре
+              нового города.
             </p>
           </Reveal>
 

@@ -8,12 +8,16 @@ export function Footer() {
     <footer className={styles.footer}>
       <Container className={styles.container}>
         <div>
-          <a href="#hero" className={styles.logo}>
+          <a href="#hero" className={styles.logo} aria-label="ISMA — недвижимость в Грозном">
             ISMA
           </a>
           <p className={styles.copy}>
-            Лучшие эксклюзивы рынка недвижимости. МФК «АН-НУР», Грозный.
+            Недвижимость в Грозном. Квартиры в МФК «АН-НУР» — рассрочка
+            до 72 месяцев.
           </p>
+          <address className={styles.address}>
+            Грозный, ул. Назарбаева, новый проспект Путина
+          </address>
         </div>
 
         <div className={styles.links}>
@@ -23,7 +27,7 @@ export function Footer() {
           <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
             Instagram
           </a>
-          <a href="#apartments">Планировки</a>
+          <a href="#apartments">Квартиры</a>
           <a href="#calculator">Калькулятор</a>
         </div>
       </Container>

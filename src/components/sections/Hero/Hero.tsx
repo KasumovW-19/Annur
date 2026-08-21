@@ -58,7 +58,7 @@ export function Hero() {
             animate="visible"
             variants={fadeUp}
           >
-            Лучшие эксклюзивы рынка недвижимости
+            Лучшие эксклюзивы рынка недвижимости в Грозном
           </motion.h1>
 
           <motion.p
@@ -68,8 +68,8 @@ export function Hero() {
             animate="visible"
             variants={fadeUp}
           >
-            Презентация нового многофункционального комплекса МФК «АН-НУР» в
-            Грозном.
+            Квартиры в новом МФК «АН-НУР» — недвижимость в Грозном
+            с рассрочкой до 72 месяцев.
           </motion.p>
 
           <motion.div

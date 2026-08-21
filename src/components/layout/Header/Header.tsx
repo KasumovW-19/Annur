@@ -5,7 +5,7 @@ import styles from "./Header.module.scss";
 
 const links = [
   { href: "#about", label: "О комплексе" },
-  { href: "#apartments", label: "Планировки" },
+  { href: "#apartments", label: "Квартиры" },
   { href: "#calculator", label: "Калькулятор" },
   { href: "#faq", label: "FAQ" },
 ];
@@ -14,7 +14,7 @@ export function Header() {
   return (
     <header className={styles.header}>
       <Container className={styles.container}>
-        <a href="#hero" className={styles.logo} aria-label="ISMA">
+        <a href="#hero" className={styles.logo} aria-label="ISMA — недвижимость в Грозном">
           ISMA
         </a>
 

@@ -48,8 +48,8 @@ export function Apartments() {
           <SectionHeading
             light
             eyebrow="Планировки"
-            title="Квартиры в МФК «АН-НУР»"
-            description="Четыре готовые планировки: рассрочка на 72 месяца и отложенный платёж 1 млн ₽ на 5 лет."
+            title="Квартиры в Грозном"
+            description="Планировки недвижимости в МФК «АН-НУР»: 1- и 2-комнатные квартиры в Грозном с рассрочкой на 72 месяца."
           />
         </Reveal>
 
@@ -80,7 +80,7 @@ export function Apartments() {
                 >
                   <Image
                     src={apartment.image}
-                    alt={`${apartment.title}, ${apartment.area} м²`}
+                    alt={`${apartment.title} ${apartment.area} м² — квартиры в Грозном, МФК АН-НУР`}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className={`${styles.image} ${
@@ -191,7 +191,7 @@ export function Apartments() {
                   >
                     <Image
                       src={active.image}
-                      alt={`${active.title}, ${active.area} м²`}
+                      alt={`${active.title} ${active.area} м² — планировка квартиры в Грозном`}
                       fill
                       sizes="(max-width: 900px) 100vw, 720px"
                       className={styles.modalImage}
