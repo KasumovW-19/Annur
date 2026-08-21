@@ -1,17 +1,23 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { X } from "lucide-react";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { CalendarRange, Maximize2, Wallet, X } from "lucide-react";
 
 import { Button } from "@/components/ui/Button/Button";
 import { Container } from "@/components/ui/Container/Container";
 import { Reveal } from "@/components/ui/Reveal/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading/SectionHeading";
 import { apartments, type Apartment } from "@/data/apartments";
-import { WHATSAPP_URL } from "@/lib/constants";
 import { formatPrice } from "@/lib/format";
 
 import styles from "./Apartments.module.scss";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+function whatsAppUrl(apartment: Apartment) {
+  const text = `Здравствуйте! Хочу узнать подробнее о ${apartment.rooms}-комнатной квартире ${apartment.area} м² в МФК АН-НУР.`;
+  return `https://wa.me/79639888885?text=${encodeURIComponent(text)}`;
+}
 
 export function Apartments() {
   const [active, setActive] = useState<Apartment | null>(null);
@@ -36,69 +42,107 @@ export function Apartments() {
 
   return (
     <section id="apartments" className={styles.apartments}>
+      <LayoutGroup>
       <Container>
         <Reveal>
           <SectionHeading
             light
             eyebrow="Планировки"
             title="Квартиры в МФК «АН-НУР»"
-            description="Выберите планировку под ваш образ жизни — от компактных студий до просторных семейных квартир."
+            description="Четыре готовые планировки: рассрочка на 72 месяца и отложенный платёж 1 млн ₽ на 5 лет."
           />
         </Reveal>
 
         <div className={styles.grid}>
           {apartments.map((apartment, index) => (
-            <Reveal key={apartment.id} delay={index * 0.05}>
-              <article className={styles.card}>
-                <button
-                  type="button"
-                  className={styles.imageWrap}
-                  aria-label={`Открыть планировку: ${apartment.title}`}
-                  onClick={() => setActive(apartment)}
+            <motion.article
+              key={apartment.id}
+              className={styles.card}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.7,
+                delay: index * 0.08,
+                ease,
+              }}
+            >
+              <button
+                type="button"
+                className={styles.imageWrap}
+                aria-label={`Открыть планировку: ${apartment.title}, ${apartment.area} м²`}
+                onClick={() => setActive(apartment)}
+              >
+                <motion.span
+                  className={styles.imageStage}
+                  layoutId={`plan-${apartment.id}`}
+                  transition={{ duration: 0.45, ease }}
                 >
                   <Image
                     src={apartment.image}
-                    alt={apartment.title}
+                    alt={`${apartment.title}, ${apartment.area} м²`}
                     fill
-                    sizes="(max-width: 768px) 100vw, 380px"
-                    className={styles.image}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className={`${styles.image} ${
+                      apartment.imageFit === "contain"
+                        ? styles.imageContain
+                        : ""
+                    }`}
                   />
-                </button>
+                </motion.span>
 
-                <div className={styles.body}>
-                  <p className={styles.rooms}>
-                    {apartment.rooms}-комнатная · {apartment.area} м²
-                  </p>
-                  <h3>{apartment.title}</h3>
+                <span className={styles.areaBadge}>
+                  {apartment.area} м²
+                </span>
 
-                  <div className={styles.meta}>
-                    <div>
-                      <span>Площадь</span>
-                      <strong>{apartment.area} м²</strong>
-                    </div>
-                    <div>
-                      <span>Цена</span>
-                      <strong>{formatPrice(apartment.price)}</strong>
-                    </div>
-                    <div className={styles.metaWide}>
-                      <span>Первоначальный взнос</span>
-                      <strong>
-                        {formatPrice(apartment.downPayment)}
-                      </strong>
-                    </div>
-                  </div>
+                <span className={styles.viewHint}>
+                  <Maximize2 size={16} strokeWidth={1.8} />
+                  Смотреть планировку
+                </span>
+              </button>
 
-                  <Button
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={styles.button}
-                  >
-                    Узнать подробнее
-                  </Button>
-                </div>
-              </article>
-            </Reveal>
+              <div className={styles.body}>
+                <p className={styles.rooms}>
+                  {apartment.rooms}-комнатная
+                </p>
+                <h3>{apartment.title}</h3>
+
+                <p className={styles.price}>
+                  <span>Ежемесячно</span>
+                  <strong>{formatPrice(apartment.price)}</strong>
+                </p>
+
+                <ul className={styles.perks}>
+                  {apartment.termMonths ? (
+                    <li>
+                      <CalendarRange size={16} strokeWidth={1.8} />
+                      На {apartment.termMonths} месяца
+                    </li>
+                  ) : null}
+                  {apartment.deferredPayment && apartment.deferredYears ? (
+                    <li>
+                      <Wallet size={16} strokeWidth={1.8} />
+                      {formatPrice(apartment.deferredPayment)} на{" "}
+                      {apartment.deferredYears} лет
+                    </li>
+                  ) : (
+                    <li>
+                      <Wallet size={16} strokeWidth={1.8} />
+                      Взнос {formatPrice(apartment.downPayment)}
+                    </li>
+                  )}
+                </ul>
+
+                <Button
+                  href={whatsAppUrl(apartment)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.button}
+                >
+                  Узнать подробнее
+                </Button>
+              </div>
+            </motion.article>
           ))}
         </div>
       </Container>
@@ -109,11 +153,11 @@ export function Apartments() {
             className={styles.modal}
             role="dialog"
             aria-modal="true"
-            aria-label={active.title}
+            aria-labelledby="apartment-modal-title"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.22 }}
           >
             <button
               type="button"
@@ -124,10 +168,10 @@ export function Apartments() {
 
             <motion.div
               className={styles.modalContent}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.35, ease }}
             >
               <button
                 type="button"
@@ -138,25 +182,75 @@ export function Apartments() {
                 <X size={22} strokeWidth={1.8} />
               </button>
 
-              <div className={styles.modalImageWrap}>
-                <Image
-                  src={active.image}
-                  alt={active.title}
-                  fill
-                  sizes="100vw"
-                  className={styles.modalImage}
-                  priority
-                />
-              </div>
+              <div className={styles.modalLayout}>
+                <div className={styles.modalImageWrap}>
+                  <motion.div
+                    className={styles.modalImageStage}
+                    layoutId={`plan-${active.id}`}
+                    transition={{ duration: 0.45, ease }}
+                  >
+                    <Image
+                      src={active.image}
+                      alt={`${active.title}, ${active.area} м²`}
+                      fill
+                      sizes="(max-width: 900px) 100vw, 720px"
+                      className={styles.modalImage}
+                      priority
+                    />
+                  </motion.div>
+                </div>
 
-              <p className={styles.modalCaption}>
-                {active.title} · {active.area} м² ·{" "}
-                {formatPrice(active.price)}
-              </p>
+                <div className={styles.modalInfo}>
+                  <p className={styles.rooms}>{active.rooms}-комнатная</p>
+                  <h3 id="apartment-modal-title">{active.title}</h3>
+
+                  <p className={styles.price}>
+                    <span>Ежемесячно</span>
+                    <strong>{formatPrice(active.price)}</strong>
+                  </p>
+
+                  <ul className={styles.modalMeta}>
+                    <li>
+                      <span>Площадь</span>
+                      <strong>{active.area} м²</strong>
+                    </li>
+                    {active.termMonths ? (
+                      <li>
+                        <span>Рассрочка</span>
+                        <strong>На {active.termMonths} месяца</strong>
+                      </li>
+                    ) : null}
+                    {active.deferredPayment && active.deferredYears ? (
+                      <li>
+                        <span>Отложенный платёж</span>
+                        <strong>
+                          {formatPrice(active.deferredPayment)} на{" "}
+                          {active.deferredYears} лет
+                        </strong>
+                      </li>
+                    ) : (
+                      <li>
+                        <span>Первоначальный взнос</span>
+                        <strong>{formatPrice(active.downPayment)}</strong>
+                      </li>
+                    )}
+                  </ul>
+
+                  <Button
+                    href={whatsAppUrl(active)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.button}
+                  >
+                    Написать в WhatsApp
+                  </Button>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>
+      </LayoutGroup>
     </section>
   );
 }

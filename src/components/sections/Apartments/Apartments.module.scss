@@ -5,22 +5,46 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
 }
 
 .card {
-  overflow: hidden;
-  background: var(--surface-light);
-  border: 1px solid var(--border-on-light);
-  height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
-  transition: border-color 200ms ease, box-shadow 200ms ease;
+  overflow: hidden;
+  height: 100%;
+  background: var(--surface-light);
+  border: 1px solid var(--border-on-light);
+  box-shadow: 0 10px 30px rgba(10, 10, 10, 0.04);
+  transition:
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms ease,
+    box-shadow 450ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
 
   &:hover {
-    border-color: color-mix(in srgb, var(--primary) 28%, var(--border-on-light));
-    box-shadow: var(--shadow-light);
+    transform: translateY(-10px);
+    border-color: color-mix(in srgb, var(--primary) 32%, var(--border-on-light));
+    box-shadow: 0 28px 70px rgba(10, 10, 10, 0.12);
+
+    &::before {
+      transform: scaleX(1);
+    }
   }
 }
 
@@ -28,76 +52,181 @@
   position: relative;
   display: block;
   width: 100%;
+  overflow: hidden;
   aspect-ratio: 4 / 3;
-  background: var(--surface-light-muted);
+  background: #f3f3f3;
   cursor: pointer;
 
   &:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: -2px;
   }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.38) 50%,
+      transparent 62%
+    );
+    transform: translateX(-120%);
+    pointer-events: none;
+    transition: transform 700ms ease;
+  }
+}
+
+.card:hover .imageWrap::after {
+  transform: translateX(120%);
+}
+
+.imageStage,
+.modalImageStage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .image {
   object-fit: cover;
-  object-position: bottom;
-  transition: transform 500ms ease;
+  object-position: center;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.imageWrap:hover .image {
-  transform: scale(1.03);
+.imageContain {
+  object-fit: contain;
+  object-position: center;
+}
+
+.card:hover .image {
+  transform: scale(1.045);
+}
+
+.areaBadge {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(10px);
+}
+
+.viewHint {
+  position: absolute;
+  z-index: 2;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  background: rgba(10, 10, 10, 0.78);
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    opacity 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.card:hover .viewHint,
+.imageWrap:focus-visible .viewHint {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .body {
   display: flex;
-  flex-direction: column;
   flex: 1;
-  padding: 24px;
+  flex-direction: column;
+  padding: 26px 26px 24px;
 }
 
 .rooms {
   color: var(--primary);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.body h3 {
-  margin-top: 10px;
+.body h3,
+.modalInfo h3 {
+  margin-top: 8px;
   color: var(--ink);
   font-family: var(--font-cormorant), Georgia, serif;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.12;
 }
 
-.meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 22px 0 28px;
-  padding-top: 18px;
-  border-top: 1px solid var(--border-on-light);
+.price {
+  margin-top: 18px;
 
   span {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     color: var(--ink-subtle);
     font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   strong {
     color: var(--ink);
-    font-size: 16px;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: clamp(32px, 3vw, 40px);
     font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
   }
 }
 
-.metaWide {
-  grid-column: 1 / -1;
-  padding-top: 4px;
+.perks {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0 26px;
+  padding: 16px 0 0;
   border-top: 1px solid var(--border-on-light);
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-muted);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+
+    svg {
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+  }
 }
 
 .button {
@@ -118,28 +247,33 @@
 .backdrop {
   position: absolute;
   inset: 0;
-  background: var(--overlay);
-  backdrop-filter: blur(8px);
+  background: rgba(5, 5, 5, 0.72);
+  backdrop-filter: blur(12px);
 }
 
 .modalContent {
   position: relative;
   z-index: 1;
-  width: min(100%, 960px);
+  width: min(100%, 1120px);
+  overflow: hidden;
+  background: var(--surface-light);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.28);
 }
 
 .close {
   position: absolute;
   z-index: 2;
-  top: -48px;
-  right: 0;
+  top: 16px;
+  right: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border-strong);
-  color: var(--foreground);
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-on-light-strong);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  backdrop-filter: blur(8px);
   transition:
     border-color 200ms ease,
     color 200ms ease,
@@ -148,33 +282,84 @@
   &:hover,
   &:focus-visible {
     border-color: var(--primary);
-    background: var(--primary-soft);
-    color: var(--accent);
+    background: var(--primary);
+    color: var(--primary-foreground);
   }
+}
+
+.modalLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  min-height: 560px;
 }
 
 .modalImageWrap {
   position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  max-height: calc(100vh - 120px);
-  background: var(--black);
+  min-height: 560px;
+  background: #111;
 }
 
 .modalImage {
   object-fit: contain;
 }
 
-.modalCaption {
-  margin-top: 14px;
-  color: var(--foreground-muted);
-  font-size: 14px;
-  text-align: center;
+.modalInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 36px 32px;
+}
+
+.modalMeta {
+  display: grid;
+  gap: 16px;
+  margin: 28px 0 32px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--border-on-light);
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  span {
+    color: var(--ink-subtle);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  strong {
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 600;
+  }
 }
 
 @media (max-width: 1024px) {
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .modalLayout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .modalImageWrap {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    max-height: 52vh;
+  }
+
+  .modalInfo {
+    padding: 28px 24px 24px;
+  }
+
+  .close {
+    top: 12px;
+    right: 12px;
   }
 }
 
@@ -185,17 +370,46 @@
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .viewHint {
+    opacity: 1;
+    transform: none;
+    background: rgba(10, 10, 10, 0.7);
+  }
+
+  .body {
+    padding: 22px 20px 20px;
+  }
+
+  .body h3,
+  .modalInfo h3 {
+    font-size: 28px;
   }
 
   .modal {
-    padding: 16px;
+    padding: 12px;
   }
 
-  .close {
-    top: -44px;
+  .price strong {
+    font-size: 32px;
   }
+}
 
-  .modalImageWrap {
-    max-height: calc(100vh - 110px);
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:hover,
+  .image,
+  .card:hover .image,
+  .viewHint,
+  .imageWrap::after,
+  .card::before {
+    transform: none;
+    transition: none;
   }
 }
